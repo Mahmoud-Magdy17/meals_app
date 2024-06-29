@@ -7,8 +7,10 @@ import 'package:meals_app/views/meals_view.dart';
 import 'package:meals_app/widgets/category_card.dart';
 
 class CategoriesView extends StatelessWidget {
-  const CategoriesView({super.key, required this.addToFavorite});
+  const CategoriesView(
+      {super.key, required this.addToFavorite, required this.filteredMeals});
   final Function(Meal) addToFavorite;
+  final List<Meal> filteredMeals;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -26,10 +28,18 @@ class CategoriesView extends StatelessWidget {
                 ),
               )
               .toList();
+          final _currentCategoryFilteredMeals = _currentCategoryMeals
+              .where((element) {
+                log(element.title);
+                return filteredMeals.contains(element);
+              }).toList();
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (ctx) => MealsView(meals: _currentCategoryMeals, addToFavorite: addToFavorite,),
+              builder: (ctx) => MealsView(
+                  meals: _currentCategoryFilteredMeals,
+                  addToFavorite: addToFavorite,
+                  filteredMeals: _currentCategoryFilteredMeals),
             ),
           );
         },

@@ -8,8 +8,10 @@ class MealsView extends StatelessWidget {
     super.key,
     required this.meals,
     required this.addToFavorite,
+    required this.filteredMeals,
   });
   final List<Meal> meals;
+  final List<Meal> filteredMeals;
   final Function(Meal) addToFavorite;
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class MealsView extends StatelessWidget {
           title: const Text("Meals"),
         ),
         body: MealsListBuilder(
-          meals: meals,
+          meals: filteredMeals,
           addToFavorite: addToFavorite,
         ),
       ),
